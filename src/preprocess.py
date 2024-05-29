@@ -28,10 +28,7 @@ def get_range(col, df1, df2):
             The minimum and maximum values across the two dataframes
     '''
     # TODO : Get the range from the dataframes
-    min1 = df1[col].min(); max1 = df1[col].max()
-    min2 = df2[col].min(); max2 = df2[col].max()
-
-    return [[min1,max1],[min2,max2]]
+    return [min([df1[col].min(), df2[col].min()]),max([df1[col].max(), df2[col].max()])]
 
 
 def combine_dfs(df1, df2):
@@ -55,6 +52,7 @@ def combine_dfs(df1, df2):
     # Filter the DataFrame to get the row where Country Name is 'Algeria'
     al1 = df1.loc[df1['Country Name'] == 'Algeria']
     al2 = df2.loc[df2['Country Name'] == 'Algeria']
+    import pandas as pd
 
     gdp1 = al1['GDP'].values[0]; gdp2 = al2['GDP'].values[0]
     if gdp1 > gdp2:
