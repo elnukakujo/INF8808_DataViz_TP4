@@ -27,12 +27,13 @@ def get_plot(my_df, gdp_range, co2_range):
             The generated figure
     '''
     # TODO : Define figure with animation
-    
-    #Need to add min size, ranges not working    
-    
+
     # size_min or min_size parameters doesn't exist
     fig= px.scatter(my_df, x="GDP", y="CO2", animation_frame="Year", animation_group="Country Name", color='Continent', 
-                    color_discrete_sequence=px.colors.qualitative.Set1, size="Population", size_max=30, range_x=gdp_range, range_y=co2_range)
+                    color_discrete_sequence=px.colors.qualitative.Set1, size="Population", size_max=30, custom_data=['Country Name'],
+                    log_x=True, log_y=True, range_x=gdp_range, range_y=co2_range)
+    
+    fig.update_traces(marker_sizemin=6)
     
     return fig
 
@@ -77,7 +78,7 @@ def update_animation_menu(fig):
             {
                 "buttons": [
                     {
-                        "args": [None, {"frame": {"duration": 500}}],
+                        "args": [None, {"frame": {"duration": 1000}}],
                         "label": "Animate",
                         "method": "animate",
                     }
@@ -88,7 +89,8 @@ def update_animation_menu(fig):
                 "y": -0.20,
                 "yanchor": "top",
             }
-        ]
+        ],
+        transition={'duration':1000} # This is just personal preference
     )
     return fig
 
