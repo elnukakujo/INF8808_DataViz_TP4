@@ -2,7 +2,6 @@
     Contains some functions to preprocess the data used in the visualisation.
 '''
 
-
 def round_decimals(my_df):
     '''
         Rounds all the numbers in the dataframe to two decimal points
@@ -13,7 +12,7 @@ def round_decimals(my_df):
             The dataframe with rounded numbers
     '''
     # TODO : Round the dataframe
-    return None
+    return my_df.round(2)
 
 
 def get_range(col, df1, df2):
@@ -29,7 +28,7 @@ def get_range(col, df1, df2):
             The minimum and maximum values across the two dataframes
     '''
     # TODO : Get the range from the dataframes
-    return []
+    return [min([df1[col].min(), df2[col].min()]),max([df1[col].max(), df2[col].max()])]
 
 
 def combine_dfs(df1, df2):
@@ -48,7 +47,20 @@ def combine_dfs(df1, df2):
             original dataframe.
     '''
     # TODO : Combine the two dataframes
-    return None
+    # Cannot assume df's come in the order: df_2000 df_2015
+    # We know that the GDP increased in Algeria::
+    # Filter the DataFrame to get the row where Country Name is 'Algeria'
+    al1 = df1.loc[df1['Country Name'] == 'Algeria']
+    al2 = df2.loc[df2['Country Name'] == 'Algeria']
+    import pandas as pd
+
+    gdp1 = al1['GDP'].values[0]; gdp2 = al2['GDP'].values[0]
+    if gdp1 > gdp2:
+      df1['Year'] = 2015; df2['Year'] = 2000
+      return pd.concat([df2, df1], ignore_index=True)
+    else:
+      df1['Year'] = 2000; df2['Year'] = 2015
+      return pd.concat([df1, df2], ignore_index=True)
 
 
 def sort_dy_by_yr_continent(my_df):
@@ -61,4 +73,4 @@ def sort_dy_by_yr_continent(my_df):
             The sorted dataframe.
     '''
     # TODO : Sort the dataframe
-    return None
+    return my_df.sort_values(by = ['Year','Continent'])

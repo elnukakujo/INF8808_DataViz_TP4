@@ -18,4 +18,7 @@ def get_bubble_hover_template():
     '''
     # TODO : Generate tooltip
 
-    return ''
+    return ('<b>Country :</b> %{customdata}'+
+            '<br><b>Population :</b> %{marker.size}</br>'+
+            '<b>GDP :</b> %{x}'+
+            '<br><b>CO2 emissions :</b> %{y}</br><extra></extra>')
